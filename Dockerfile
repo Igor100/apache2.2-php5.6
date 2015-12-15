@@ -1,5 +1,7 @@
 # =============================================================================
-# CentOS-6 6.5 x86_64 
+# Dockerfile automated Docker Hub build - Base image for other ones
+#
+# CentOS-6 
 # EPEL Repo 
 # OpenSSH
 # Supervisor
@@ -10,7 +12,7 @@
 # =============================================================================
 
 # =============================================================================
-# Cambios OPCACHE para DESA en php.ini
+# OPCACHE modified options in php.ini for developing
 # =============================================================================
 # ;opcache.revalidate_freq=60
 # opcache.revalidate_freq=0
