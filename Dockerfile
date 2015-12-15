@@ -20,11 +20,11 @@
 # opcache.validate_timestamps=1
 # =============================================================================
 
+FROM centos:centos6
+
 MAINTAINER Supermasita <supermasita@supermasita.com>
 
 ENV UPDATED "2015-12-15"
-
-FROM centos:centos6
 
 ## Import the Centos-6 RPM GPG key to prevent warnings and Add EPEL Repository
 RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-6 \
