@@ -106,7 +106,7 @@ RUN cd /usr/local/src/httpd-2.2.31 && make && make install
 RUN ln -s /usr/local/apache-2.2.31 /usr/local/apache2
 
 ## MOD_FCGID
-RUN wget http://mirrors.dcarsat.com.ar/apache//httpd/mod_fcgid/mod_fcgid-2.3.9.tar.gz -O /usr/local/src/mod_fcgid-2.3.9.tar.gz
+RUN wget http://apache.claz.org//httpd/mod_fcgid/mod_fcgid-2.3.9.tar.gz -O /usr/local/src/mod_fcgid-2.3.9.tar.gz
 RUN cd /usr/local/src/ && tar xvf mod_fcgid-2.3.9.tar.gz
 RUN cd /usr/local/src/mod_fcgid-2.3.9 && APXS=/usr/local/apache2/bin/apxs ./configure.apxs && make && make install
 
