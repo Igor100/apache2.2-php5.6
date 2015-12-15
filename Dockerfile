@@ -7,7 +7,7 @@
 # Supervisor
 # Apache 2.2
 # PHP 5.6
-# MOD_FCGID 2.3.4
+# MOD_FCGID 2.3
 # Drush
 # =============================================================================
 
@@ -20,11 +20,11 @@
 # opcache.validate_timestamps=1
 # =============================================================================
 
-FROM centos:centos6
-
 MAINTAINER Supermasita <supermasita@supermasita.com>
 
-ENV UPDATED "2015-12-14"
+ENV UPDATED "2015-12-15"
+
+FROM centos:centos6
 
 ## Import the Centos-6 RPM GPG key to prevent warnings and Add EPEL Repository
 RUN rpm --import http://mirror.centos.org/centos/RPM-GPG-KEY-CentOS-6 \
@@ -124,6 +124,9 @@ RUN ln -s /usr/local/php/bin/php-pear /usr/bin/php-pear
 # Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
 RUN wget http://files.drush.org/drush.phar -O /usr/local/src/drush.phar && cd /usr/local/src && php drush.phar core-status && chmod +x drush.phar && mv drush.phar /usr/local/bin/drush && drush init
 
+## CLEAN UP
+RUN rm -fr /usr/local/src/*
+
 ## PECL MEMCACHE
 RUN yes | /usr/local/php/bin/pecl install memcache-3.0.8
 
@@ -136,16 +139,18 @@ ADD php.ini /usr/local/php/lib/
 ## HTTPD CONF
 ADD httpd.conf /usr/local/apache2/conf/
 RUN mkdir /usr/local/apache2/conf/virtuales/
+ADD httpd-fastcgid.conf /usr/local/apache2/conf/extra/
 RUN mkdir /var/log/apache2/
 ADD 000-default.conf /usr/local/apache2/conf/virtuales/
-RUN mkdir /var/www && chown www-data. /var/www
-ADD httpd-fastcgid.conf /usr/local/apache2/conf/extra/
+RUN mkdir /data && chown www-data. /data
+RUN mkdir /var/www && chown -R www-data. /var/www
+RUN ln -s /data /var/www
 
 ## SUPERVISOR CONF
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 ## PORTS
-EXPOSE 22 80 8080 443 9187 8088 6084
+EXPOSE 22 80 8080 443 9187 8088 6084 11211 11311
 
 
 ## RUN, FORREST! RUN!
