@@ -143,7 +143,7 @@ ADD httpd-fastcgid.conf /usr/local/apache2/conf/extra/
 RUN mkdir /var/log/apache2/
 ADD 000-default.conf /usr/local/apache2/conf/virtuales/
 RUN mkdir /data && chown www-data. /data
-RUN mkdir /var/www && chown -R www-data. /var/www
+#RUN mkdir /var/www && chown -R www-data. /var/www
 RUN ln -s /data /var/www
 
 ## SUPERVISOR CONF
