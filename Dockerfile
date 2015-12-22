@@ -3,7 +3,6 @@
 #
 # CentOS-6 
 # EPEL Repo 
-# OpenSSH
 # Supervisor
 # Apache 2.2
 # PHP 5.6
@@ -38,12 +37,10 @@ RUN useradd www-data
 RUN yum -y install \
     vim \
     sudo \
-    openssh \
-    openssh-server \
-    openssh-clients \
     python-pip \
     dig \
     telnet \
+    openssh-clients \
     curl \
     cronie \
     rsyslog \
@@ -80,23 +77,6 @@ RUN echo -e "*/15 * * * * /usr/sbin/ntpdate ar.pool.ntp.org > /tmp/ntpdate.cron.
 ## UTC Timezone & Networking
 RUN ln -sf /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/localtime \
     && echo -e "NETWORKING=yes\nHOSTNAME=centos6" > /etc/sysconfig/network
-
-
-## Configure SSH for non-root public key authentication
-RUN sed -i \
-    -e 's/^UsePAM yes/#UsePAM yes/g' \
-    -e 's/^#UsePAM no/UsePAM no/g' \
-    -e 's/^#PermitRootLogin yes/PermitRootLogin no/g' \
-    -e 's/^#UseDNS yes/UseDNS no/g' \
-    -e 's/^#Port 22/Port 22/g'\
-    /etc/ssh/sshd_config
-
-## SSH KEY
-RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
-RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
-RUN sed -ri 's/session    required     pam_loginuid.so/#session    required     pam_loginuid.so/g' /etc/pam.d/sshd
-RUN sed -ri 's/session    required     pam_loginuid.so/#session    required     pam_loginuid.so/g' /etc/pam.d/crond
-#RUN mkdir -p /root/.ssh && chown root.root /root && chmod 700 /root/.ssh
 
 ## APACHE
 RUN wget http://apache.dattatec.com/httpd/httpd-2.2.31.tar.gz -O /usr/local/src/httpd-2.2.31.tar.gz
@@ -143,7 +123,6 @@ ADD httpd-fastcgid.conf /usr/local/apache2/conf/extra/
 RUN mkdir /var/log/apache2/
 ADD 000-default.conf /usr/local/apache2/conf/virtuales/
 RUN mkdir /data && chown www-data. /data
-#RUN mkdir /var/www && chown -R www-data. /var/www
 RUN ln -s /data /var/www
 
 ## SUPERVISOR CONF
