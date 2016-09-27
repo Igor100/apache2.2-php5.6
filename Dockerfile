@@ -21,7 +21,7 @@
 
 FROM centos:centos6
 
-MAINTAINER Supermasita <supermasita@supermasita.com>
+MAINTAINER Devops Artear <devops_digital@artear.com>
 
 ENV UPDATED "2015-12-15"
 
@@ -73,6 +73,8 @@ RUN rm -rf /var/cache/yum/* && yum clean all
 ## CRON
 RUN echo -e "*/15 * * * * /usr/sbin/ntpdate ar.pool.ntp.org > /tmp/ntpdate.cron.out 2>&1" > /var/spool/cron/root
 
+## Tunning Sudoers
+RUN echo -e "Defaults !requiretty" > /etc/sudoers.d/rundeck.conf
 
 ## UTC Timezone & Networking
 RUN ln -sf /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/localtime \
