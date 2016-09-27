@@ -93,7 +93,7 @@ RUN cd /usr/local/src/ && tar xvf mod_fcgid-2.3.9.tar.gz
 RUN cd /usr/local/src/mod_fcgid-2.3.9 && APXS=/usr/local/apache2/bin/apxs ./configure.apxs && make && make install
 
 ## PHP
-RUN wget http://ar2.php.net/get/php-5.6.6.tar.gz/from/this/mirror  -O /usr/local/src/php-5.6.6.tar.gz 
+RUN wget http://php.net/get/php-5.6.6.tar.gz/from/this/mirror  -O /usr/local/src/php-5.6.6.tar.gz 
 RUN cd /usr/local/src/ && tar -zxvf php-5.6.6.tar.gz
 RUN cd /usr/local/src/php-5.6.6 && ./configure --enable-mbstring --with-mysql --with-mysqli --with-zlib --with-png-dir=/usr --with-jpeg-dir=/usr --with-freetype-dir=/usr --with-curl --with-gettext --with-pdo-mysql --with-pdo-sqlite --with-bz2 --prefix=/usr/local/php-5.6.6/ --with-libdir=lib64 --with-gd --with-libdir=lib64 --enable-cgi --enable-sockets --with-mcrypt --enable-soap --with-openssl --enable-opcache 
 RUN cd /usr/local/src/php-5.6.6 && make && make install 
