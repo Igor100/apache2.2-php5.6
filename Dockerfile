@@ -104,7 +104,7 @@ RUN ln -s /usr/local/php/bin/php-pear /usr/bin/php-pear
 
 ## DRUSH
 # Download latest stable release using the code below or browse to github.com/drush-ops/drush/releases.
-RUN wget http://files.drush.org/drush.phar -O /usr/local/src/drush.phar && cd /usr/local/src && php drush.phar core-status && chmod +x drush.phar && mv drush.phar /usr/local/bin/drush && drush init
+RUN wget https://github.com/drush-ops/drush/releases/download/8.0.1/drush.phar -O /usr/local/src/drush.phar && cd /usr/local/src && php drush.phar core-status && chmod +x drush.phar && mv drush.phar /usr/local/bin/drush && drush init
 
 ## CLEAN UP
 RUN rm -fr /usr/local/src/*
